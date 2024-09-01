@@ -1,4 +1,4 @@
-const { Room, Booking } = require('./index')
+const { Room, Booking } = require('./index.ts')
 
 describe('isOccupied method test', () => {
     test('Should return true if room is occupied', () => {
@@ -79,16 +79,19 @@ describe('isOccupied method test', () => {
     test('availableRooms method test', () => {
         const rooms = [
             new Room('Room 5', [
-                new Booking('Samuel', 'samuel@correo.es', new Date('2020-01-01'), new Date('2020-01-10'), 50, 'Room 5')
+                new Booking('Samuel', 'samuel@correo.es', new Date('2020-01-01'), new Date('2020-01-12'), 50, new Room('Room 5', [], 1000, 10))
             ], 1000, 10),
             new Room('Room 6', [
-                new Booking('Rodrigo', 'rodri@correo.es', new Date('2020-01-12'), new Date('2020-01-22'), 10, 'Room 6')
+                new Booking('Rodrigo', 'rodri@correo.es', new Date('2020-01-12'), new Date('2020-01-22'), 10, new Room('Room 6', [], 1000, 10))
             ], 1000, 10)
-        ]
-        const availableRooms = Room.availableRooms(rooms, new Date('2020-01-05'), new Date('2020-01-20'))
-        expect(availableRooms).toHaveLength(1)
-        expect(availableRooms[0].name).toBe('Room 6')
-    })
+        ];
+
+        const availableRooms = Room.availableRooms(rooms, new Date('2020-01-11'), new Date('2020-01-11'));
+        expect(availableRooms).toHaveLength(1);
+        expect(availableRooms[0].name).toBe('Room 6');
+    });
+
+
 })
 
 describe('getFee method test', () => {
